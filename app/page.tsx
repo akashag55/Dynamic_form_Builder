@@ -2,7 +2,7 @@
 import Image from "next/image";
 import React, { useState, useEffect, useContext } from "react";
 import logo from "../assets/logo.png";
-import { AddSection, DynamicForm, Submissions } from "./containers";
+import { CreateFrom, DynamicForm, Submissions } from "./containers";
 import { FormContext } from "./context";
 import { Sidebar } from "./components";
 
@@ -47,7 +47,7 @@ const Home = () => {
       case "submissions":
         return <Submissions />;
       default:
-        return <AddSection />;
+        return <CreateFrom />;
         break;
     }
   };

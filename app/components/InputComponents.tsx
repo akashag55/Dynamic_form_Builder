@@ -1,20 +1,19 @@
 import React from "react";
 
 export const CustomeInput = (props: any) => {
-
   const name = props.fields.name.toLowerCase();
   return (
     <div className="form-control w-full max-w-xs">
       <label className="label">
         {props.fields.name}
-        {props.fields.required == "Yes" && <span className="text-red">*</span>}
+        {props.fields.required && <span className="text-red">*</span>}
       </label>
       <input
         type={props.fields.type}
         name={name}
         value={props.formData.name}
-        placeholder="Enter Value"
-        required={props.fields.required == "Yes" ? true : false}
+        placeholder={`Enter ${props.fields.name}`}
+        required={props.fields.required}
         className="input input-bordered w-full max-w-xs"
         onChange={props.onChangehandler}
       />
@@ -23,20 +22,39 @@ export const CustomeInput = (props: any) => {
 };
 
 export const Textinput = (props: any) => {
-
   const name = props.fields.name.toLowerCase();
   return (
     <div className="form-control w-full max-w-xs">
       <label className="label">
         {props.fields.name}{" "}
-        {props.fields.required == "Yes" && <span className="text-red">*</span>}
+        {props.fields.required && <span className="text-red">*</span>}
       </label>
       <input
         type="text"
         name={name}
         value={props.formData.name}
-        placeholder="Enter Value"
-        required={props.fields.required == "Yes" ? true : false}
+        placeholder={`Enter ${props.fields.name}`}
+        required={props.fields.required}
+        className="input input-bordered w-full max-w-xs"
+        onChange={props.onChangehandler}
+      />
+    </div>
+  );
+};
+export const Numberinput = (props: any) => {
+  const name = props.fields.name.toLowerCase();
+  return (
+    <div className="form-control w-full max-w-xs">
+      <label className="label">
+        {props.fields.name}{" "}
+        {props.fields.required && <span className="text-red">*</span>}
+      </label>
+      <input
+        type="number"
+        name={name}
+        value={props.formData.name}
+        placeholder={`Enter ${props.fields.name}`}
+        required={props.fields.required}
         className="input input-bordered w-full max-w-xs"
         onChange={props.onChangehandler}
       />
@@ -50,14 +68,14 @@ export const Emailinput = (props: any) => {
     <div className="form-control w-full max-w-xs">
       <label className="label">
         {props.fields.name}{" "}
-        {props.fields.required == "Yes" && <span className="text-red">*</span>}
+        {props.fields.required && <span className="text-red">*</span>}
       </label>
       <input
         type="email"
         name={name}
         value={props.formData.name}
-        placeholder="Enter Value"
-        required={props.fields.required == "Yes" ? true : false}
+        placeholder={`Enter ${props.fields.name}`}
+        required={props.fields.required}
         className="input input-bordered w-full max-w-xs"
         onChange={props.onChangehandler}
       />
@@ -70,13 +88,13 @@ export const TextareaInput = (props: any) => {
     <div className="form-control w-full max-w-xs">
       <label className="label">
         {props.fields.name}{" "}
-        {props.fields.required == "Yes" && <span className="text-red">*</span>}
+        {props.fields.required && <span className="text-red">*</span>}
       </label>
       <input
         type="textarea"
         name={name}
         value={props.formData.name}
-        placeholder="Enter Value"
+        placeholder={`Enter ${props.fields.name}`}
         className="input input-bordered w-full max-w-xs"
         onChange={props.onChangehandler}
       />
@@ -89,13 +107,13 @@ export const DateInput = (props: any) => {
     <div className="form-control w-full max-w-xs">
       <label className="label">
         {props.fields.name}{" "}
-        {props.fields.required == "Yes" && <span className="text-red">*</span>}
+        {props.fields.required && <span className="text-red">*</span>}
       </label>
       <input
         type="date"
         name={name}
         value={props.formData.name}
-        placeholder="Enter Value"
+        placeholder={`Enter ${props.fields.name}`}
         className="input input-bordered w-full max-w-xs"
         onChange={props.onChangehandler}
       />
@@ -108,13 +126,13 @@ export const FileInput = (props: any) => {
     <div className="form-control w-full max-w-xs">
       <label className="label">
         {props.fields.name}{" "}
-        {props.fields.required == "Yes" && <span className="text-red">*</span>}
+        {props.fields.required && <span className="text-red">*</span>}
       </label>
       <input
         type="file"
         name={name}
         // value={props.fields.name}
-        placeholder="Enter Value"
+        placeholder={`Enter ${props.fields.name}`}
         className="file-input file-input-bordered w-full max-w-xs"
         onChange={props.onChangehandler}
       />
@@ -122,14 +140,14 @@ export const FileInput = (props: any) => {
   );
 };
 export const DropdownInput = (props: any) => {
-  console.log("dropdown", props)
+  console.log("dropdown", props);
   const name = props.fields.name.toLowerCase();
   const values = props.fields.values;
   return (
     <div className="form-control m-2 w-full max-w-xs">
       <label className="label block">
         {props.fields.name}
-        {props.fields.required == "Yes" && <span className="text-red">*</span>}
+        {props.fields.required && <span className="text-red">*</span>}
       </label>
       <select
         className="select select-bordered w-full max-w-xs"
@@ -153,7 +171,7 @@ export const RadioInput = (props: any) => {
     <div className="form-control m-2  max-w-xs">
       <label className="label block">
         {props.fields.name}
-        {props.fields.required == "Yes" && <span className="text-red">*</span>}
+        {props.fields.required && <span className="text-red">*</span>}
       </label>
       <div className="flex">
         <div className="m-4 flex mt-2">
@@ -190,7 +208,7 @@ export const CheckBoxInput = (props: any) => {
     <div className="form-control m-2 w-full max-w-xs">
       <label className="label block">
         {props.fields.name}
-        {props.fields.required == "Yes" && <span className="text-red">*</span>}
+        {props.fields.required && <span className="text-red">*</span>}
       </label>
       {/* <select
         className="select select-bordered w-full max-w-xs"
@@ -204,7 +222,7 @@ export const CheckBoxInput = (props: any) => {
               <input
                 key={index}
                 type="checkbox"
-                name="required"
+                name={name}
                 value={item}
                 className="checkbox"
                 // checked={formFields[index].status}

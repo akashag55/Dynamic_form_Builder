@@ -10,11 +10,12 @@ import {
 } from "../components";
 import { FaWindowClose } from "react-icons/fa";
 import { FormContext } from "../context";
+import { Numberinput } from "../components/InputComponents";
 const DynamicForm = (props: any) => {
   let [data, setData] = useState<any>([]);
   const [formField, setFormField] = useState<any>([]);
   const [formData, setFormData] = useState<any>({});
-
+  const [showData, stetShowData] = React.useState(false);
   const { addSubmission } = useContext(FormContext);
 
   var sectionName = props.sectionName;
@@ -27,26 +28,23 @@ const DynamicForm = (props: any) => {
   const onChangehandler = (e: any) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
-    // console.log("target value", e.target.name, e.target.value);
   };
   const onFileChangehandler = (e: any) => {
     const { name } = e.target;
 
     if (e.target.files) {
       const selectedFile = e.target.files[0];
-      // console.log("Selected file:", selectedFile);
       setFormData({ ...formData, [name]: selectedFile });
     }
   };
 
   const handleSubmit = () => {
     console.log("submit values", formData);
-    // setData({ ...formData });
+    setData({ ...formData });
     data.push(formData);
-    addSubmission(formData);
+    stetShowData(true);
     setFormData("");
-
-    console.log("state in handle submit in function", data);
+    console.log("submit ", data);
   };
 
   return (
@@ -65,6 +63,14 @@ const DynamicForm = (props: any) => {
                   <div key={index}>
                     {item.type == "text" && (
                       <Textinput
+                        fields={item}
+                        formData={formData}
+                        setformData={setFormData}
+                        onChangehandler={onChangehandler}
+                      />
+                    )}
+                    {item.type == "number" && (
+                      <Numberinput
                         fields={item}
                         formData={formData}
                         setformData={setFormData}
@@ -135,12 +141,20 @@ const DynamicForm = (props: any) => {
           </label>
         </div>
       </div>
-      {/* <div>
-        {formData &&
-          formData.map((item: any, index: any) => {
-            return <p>iem</p>;
-          })}
-      </div> */}
+      {showData && (
+        <div className="p-4">
+          <h4 className="text-2xl font-semibold">
+            This is the Final Form Data
+          </h4>
+          {Object.entries(data).map(([key, value]: any, index: any) => (
+            <div key={key} className="p-4">
+              <p className="text-lg font-medium">
+                {index + 1}) {key.toUpperCase()}: {value}
+              </p>
+            </div>
+          ))}
+        </div>
+      )}
     </div>
     // {/* --------------------Add user Modal End----------------------*/}
 

@@ -1,5 +1,5 @@
-import AddSection from "./AddSection";
+import CreateFrom from "./CreateForm";
 import DynamicForm from "./DynamicForm";
 import Submissions from "./Submissions";
 
-export { AddSection, DynamicForm, Submissions };
+export { CreateFrom, DynamicForm, Submissions };
