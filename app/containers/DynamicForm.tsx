@@ -135,12 +135,12 @@ const DynamicForm = (props: any) => {
           </label>
         </div>
       </div>
-      <div>
+      {/* <div>
         {formData &&
           formData.map((item: any, index: any) => {
             return <p>iem</p>;
           })}
-      </div>
+      </div> */}
     </div>
     // {/* --------------------Add user Modal End----------------------*/}
 
