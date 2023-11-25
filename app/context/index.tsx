@@ -21,6 +21,7 @@ const FormContextProvider = ({ children }: any) => {
   };
 
   const addSubmission = (submission: any) => {
+    console.log("------",submission)
     setSubmissions((prev: any) => [...prev, submission]);
   };
 

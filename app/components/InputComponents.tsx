@@ -45,7 +45,6 @@ export const Textinput = (props: any) => {
 };
 
 export const Emailinput = (props: any) => {
-  console.log("email props", props)
   const name = props.fields.name.toLowerCase();
   return (
     <div className="form-control w-full max-w-xs">
@@ -123,8 +122,9 @@ export const FileInput = (props: any) => {
   );
 };
 export const DropdownInput = (props: any) => {
+  console.log("dropdown", props)
   const name = props.fields.name.toLowerCase();
-  const values = props.fields.field_values.split(",");
+  const values = props.fields.values;
   return (
     <div className="form-control m-2 w-full max-w-xs">
       <label className="label block">
@@ -185,7 +185,7 @@ export const RadioInput = (props: any) => {
 
 export const CheckBoxInput = (props: any) => {
   const name = props.fields.name.toLowerCase();
-  const values = props.fields.field_values.split(",");
+  const values = props.fields.values;
   return (
     <div className="form-control m-2 w-full max-w-xs">
       <label className="label block">

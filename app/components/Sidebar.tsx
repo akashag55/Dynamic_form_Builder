@@ -49,11 +49,11 @@ const Sidebar = ({
           </li>
         </ul>
       </div>
-      <div className="p-4">
+      {/* <div className="p-4">
         <h2 className="text-lg cursor-pointer" onClick={() => handleMenuClick("submissions")}>
           Submissions
         </h2>
-      </div>
+      </div> */}
     </aside>
   );
 };

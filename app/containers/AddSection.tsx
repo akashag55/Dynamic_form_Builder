@@ -11,12 +11,12 @@ const AddSection = () => {
       values: ["", ""],
       required: true,
     },
-    {
-      name: "",
-      type: "text",
-      values: ["", ""],
-      required: true,
-    },
+    // {
+    //   name: "",
+    //   type: "text",
+    //   values: ["", ""],
+    //   required: true,
+    // },
   ];
   const { addForm } = useContext(FormContext);
   const [sectionDetails, setSectionDetails] = useState({

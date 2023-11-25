@@ -1,6 +1,8 @@
-import React from "react";
-
+import React, { useContext } from "react";
+import { FormContext } from "../context";
 const Submissions = () => {
+  const { submission } = useContext(FormContext);
+  console.log("submissions", submission);
   return (
     <div className="p-3 bg-white h-screen">
       <div className="flex items-center justify-between w-full"></div>
