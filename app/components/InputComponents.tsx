@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState } from "react";
+import { validateNumber, validateString } from "../utils";
 
 export const CustomeInput = (props: any) => {
   const name = props.fields.name.toLowerCase();
@@ -41,8 +42,40 @@ export const Textinput = (props: any) => {
     </div>
   );
 };
-export const Numberinput = (props: any) => {
-  const name = props.fields.name.toLowerCase();
+export const NumberInput = (props: any) => {
+  const [isInvalid, setIsInvalid] = useState(false);
+  const [errorText, setErrorText] = useState("");
+  const { fields, onChangehandler } = props;
+  const {
+    name,
+    type,
+    required,
+    isValidationTrue,
+    validation,
+    values,
+  } = fields;
+  const { minValue, maxValue } = validation;
+  console.log("----0", props)
+  const handleChange = (e: any) => {
+    // validate(schemaName, value)
+    if (isValidationTrue) {
+      const valid: any = validateNumber(
+        "number",
+        e.target.value,
+        minValue,
+        maxValue
+      );
+      console.log("valid - ", valid);
+      if (valid["error"]) {
+        setErrorText(valid.error.message);
+        setIsInvalid(true);
+      } else {
+        setErrorText("");
+        setIsInvalid(false);
+      }
+    }
+    onChangehandler(e);
+  };
   return (
     <div className="form-control w-full max-w-xs">
       <label className="label">
@@ -51,19 +84,41 @@ export const Numberinput = (props: any) => {
       </label>
       <input
         type="number"
-        name={name}
+        name={name.toLowerCase()}
         value={props.formData.name}
-        placeholder={`Enter ${props.fields.name}`}
-        required={props.fields.required}
+        placeholder={`Enter ${name}`}
+        required={required}
         className="input input-bordered w-full max-w-xs"
-        onChange={props.onChangehandler}
+        onChange={handleChange}
       />
+      {isInvalid && (
+        <label className="text-xs text-red p-1">
+          {(props.fields.validation?.errorText?.length > 0 &&
+            props.fields.validation?.errorText) ||
+            errorText}
+        </label>
+      )}
     </div>
   );
 };
 
 export const Emailinput = (props: any) => {
+  const [isInvalid, setIsInvalid] = useState(false);
+  const [errorText, setErrorText] = useState("");
   const name = props.fields.name.toLowerCase();
+  const handleChange = (e: any) => {
+    // validate(schemaName, value)
+    const valid: any = validateString("email", e.target.value);
+    console.log("valid - ", valid);
+    if (valid["error"]) {
+      setErrorText(valid.error.message);
+      setIsInvalid(true);
+    } else {
+      setErrorText("");
+      setIsInvalid(false);
+    }
+    props.onChangehandler(e);
+  };
   return (
     <div className="form-control w-full max-w-xs">
       <label className="label">
@@ -77,11 +132,72 @@ export const Emailinput = (props: any) => {
         placeholder={`Enter ${props.fields.name}`}
         required={props.fields.required}
         className="input input-bordered w-full max-w-xs"
-        onChange={props.onChangehandler}
+        onChange={handleChange}
       />
+      {isInvalid && (
+        <label className="text-xs text-red p-1">
+          {(props.fields.validation?.errorText?.length > 0 &&
+            props.fields.validation?.errorText) ||
+            errorText}
+        </label>
+      )}
     </div>
   );
 };
+export const PasswordInput = (props: any) => {
+  const passwordErrorTextMap: any = {
+    weakPassword: "Minimum 3 characters required",
+    mildPassword: "Minimum 6 alphanumeric characters required",
+    strongPassword:
+      "Minimum eight characters, at least one letter, one number and one special character required",
+  };
+  const [isInvalid, setIsInvalid] = useState(false);
+  const [errorText, setErrorText] = useState(
+    passwordErrorTextMap[props.fields.validation?.strength]
+  );
+  const name = props.fields.name.toLowerCase();
+  const handleChange = (e: any) => {
+    // validate(schemaName, value)
+    const valid: any = validateString(
+      props.fields.validation.strength,
+      e.target.value
+    );
+    console.log("valid - ", valid);
+    if (valid["error"]) {
+      setErrorText(valid.error.message);
+      setIsInvalid(true);
+    } else {
+      setErrorText("");
+      setIsInvalid(false);
+    }
+    props.onChangehandler(e);
+  };
+  return (
+    <div className="form-control w-full max-w-xs">
+      <label className="label">
+        {props.fields.name}{" "}
+        {props.fields.required && <span className="text-red">*</span>}
+      </label>
+      <input
+        type="password"
+        name={name}
+        value={props.formData.name}
+        placeholder={`Enter ${props.fields.name}`}
+        required={props.fields.required}
+        className="input input-bordered w-full max-w-xs"
+        onChange={handleChange}
+      />
+      {isInvalid && (
+        <label className="text-xs text-red p-1">
+          {(props.fields.validation?.errorText?.length > 0 &&
+            props.fields.validation?.errorText) ||
+            errorText}
+        </label>
+      )}
+    </div>
+  );
+};
+
 export const TextareaInput = (props: any) => {
   const name = props.fields.name.toLowerCase();
   return (
@@ -101,8 +217,24 @@ export const TextareaInput = (props: any) => {
     </div>
   );
 };
+
 export const DateInput = (props: any) => {
+  // const [isInvalid, setIsInvalid] = useState(false);
+  // const [errorText, setErrorText] = useState("");
   const name = props.fields.name.toLowerCase();
+  // const handleChange = (e: any) => {
+  //   // validate(schemaName, value)
+  //   const valid = validateDate("date", e.target.value, );
+  //   console.log("valid - ", valid);
+  //   if (valid["error"]) {
+  //     setErrorText(valid.error.message);
+  //     setIsInvalid(true);
+  //   } else {
+  //     setErrorText('');
+  //     setIsInvalid(false);
+  //   }
+  //   props.onChangehandler(e);
+  // };
   return (
     <div className="form-control w-full max-w-xs">
       <label className="label">
@@ -120,6 +252,7 @@ export const DateInput = (props: any) => {
     </div>
   );
 };
+
 export const FileInput = (props: any) => {
   const name = props.fields.name.toLowerCase();
   return (
@@ -139,6 +272,7 @@ export const FileInput = (props: any) => {
     </div>
   );
 };
+
 export const DropdownInput = (props: any) => {
   console.log("dropdown", props);
   const name = props.fields.name.toLowerCase();
@@ -165,6 +299,7 @@ export const DropdownInput = (props: any) => {
     </div>
   );
 };
+
 export const RadioInput = (props: any) => {
   const name = props.fields.name.toLowerCase();
   return (

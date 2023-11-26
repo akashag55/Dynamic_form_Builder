@@ -7,10 +7,11 @@ import {
   RadioInput,
   TextareaInput,
   Textinput,
+  NumberInput,
+  PasswordInput,
 } from "../components";
 import { FaWindowClose } from "react-icons/fa";
 import { FormContext } from "../context";
-import { Numberinput } from "../components/InputComponents";
 const DynamicForm = (props: any) => {
   let [data, setData] = useState<any>([]);
   const [formField, setFormField] = useState<any>([]);
@@ -46,7 +47,9 @@ const DynamicForm = (props: any) => {
     setFormData("");
     console.log("submit ", data);
   };
-
+  useEffect(() => {
+    console.log(props);
+  }, [props]);
   return (
     <div className="p-3 bg-bggrey h-screen">
       <div className="flex items-center justify-between w-full">
@@ -58,7 +61,7 @@ const DynamicForm = (props: any) => {
           <form>
             <div className="flex flex-wrap justify-between">
               {props.selectedForm.formData.map((item: any, index: number) => {
-                // console.log(item);
+                console.log(item);
                 return (
                   <div key={index}>
                     {item.type == "text" && (
@@ -70,7 +73,7 @@ const DynamicForm = (props: any) => {
                       />
                     )}
                     {item.type == "number" && (
-                      <Numberinput
+                      <NumberInput
                         fields={item}
                         formData={formData}
                         setformData={setFormData}
@@ -79,6 +82,14 @@ const DynamicForm = (props: any) => {
                     )}
                     {item.type == "email" && (
                       <Emailinput
+                        fields={item}
+                        formData={formData}
+                        setformData={setFormData}
+                        onChangehandler={onChangehandler}
+                      />
+                    )}
+                    {item.type == "password" && (
+                      <PasswordInput
                         fields={item}
                         formData={formData}
                         setformData={setFormData}

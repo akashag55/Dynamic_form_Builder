@@ -1,6 +1,7 @@
 import InputSwitch from "./InputSwitch";
 import FormOptions from "./FormOptions";
 import Sidebar from "./Sidebar";
+import InputValidation from "./InputValidation";
 import {
   CustomeInput,
   CheckBoxInput,
@@ -11,6 +12,8 @@ import {
   FileInput,
   DateInput,
   TextareaInput,
+  PasswordInput,
+  NumberInput,
 } from "./InputComponents";
 
 export {
@@ -26,4 +29,7 @@ export {
   FileInput,
   DateInput,
   TextareaInput,
+  InputValidation,
+  PasswordInput,
+  NumberInput,
 };

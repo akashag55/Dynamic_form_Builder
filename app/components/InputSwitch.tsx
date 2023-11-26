@@ -2,7 +2,6 @@
 import React, { useState } from "react";
 
 const InputSwitch = (props: any) => {
-  console.log();
 
   const addValue = (index: number) => {
     const updatedFields = [...props.formFields];
@@ -61,10 +60,10 @@ const InputSwitch = (props: any) => {
                     width="24"
                     height="24"
                     stroke="red"
-                    stroke-width="2"
+                    strokeWidth="2"
                     fill="none"
                     stroke-linecap="round"
-                    stroke-linejoin="round"
+                    strokeLinejoin="round"
                     className="css-i6dzq1"
                     type="button"
                     onClick={() => removeValue(props.index, valueIndex)}
@@ -113,10 +112,10 @@ const InputSwitch = (props: any) => {
                     width="24"
                     height="24"
                     stroke="red"
-                    stroke-width="2"
+                    strokeWidth="2"
                     fill="none"
                     stroke-linecap="round"
-                    stroke-linejoin="round"
+                    strokeLinejoin="round"
                     className="css-i6dzq1"
                     type="button"
                     onClick={() => removeValue(props.index, valueIndex)}
@@ -166,10 +165,10 @@ const InputSwitch = (props: any) => {
                     width="24"
                     height="24"
                     stroke="red"
-                    stroke-width="2"
+                    strokeWidth="2"
                     fill="none"
                     stroke-linecap="round"
-                    stroke-linejoin="round"
+                    strokeLinejoin="round"
                     className="css-i6dzq1"
                     type="button"
                     onClick={() => removeValue(props.index, valueIndex)}

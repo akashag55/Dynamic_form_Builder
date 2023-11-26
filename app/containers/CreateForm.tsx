@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import { InputSwitch } from "../components";
+import { InputSwitch, InputValidation } from "../components";
 import { FormContext } from "../context";
 
 const CreateForm = () => {
@@ -9,17 +9,14 @@ const CreateForm = () => {
       type: "text",
       values: ["", ""],
       required: true,
+      isValidationTrue: true,
+      validation: {},
     },
-    // {
-    //   name: "",
-    //   type: "text",
-    //   values: ["", ""],
-    //   required: true,
-    // },
   ];
   const { addForm } = useContext(FormContext);
   const [sectionDetails, setFormDetaild] = useState({
     formName: "",
+    description: "",
   });
   const [formFields, setFormFields] = useState<any>(initialState);
 
@@ -29,7 +26,6 @@ const CreateForm = () => {
     if (type === "checkbox") {
       const updatedFormFields = [...formFields];
       updatedFormFields[index][name] = checked;
-
       setFormFields(updatedFormFields);
     } else {
       const updatedFormFields = [...formFields];
@@ -52,8 +48,17 @@ const CreateForm = () => {
         type: "text",
         values: ["", ""],
         required: true,
+        isValidationTrue: false,
+        validation: {},
       },
     ]);
+  };
+
+  const handleValidationChange = (index: any, validation: any) => {
+    const updatedFormFields = [...formFields];
+    updatedFormFields[index]["validation"] = validation;
+    console.log("updatedFormFields - ", updatedFormFields);
+    setFormFields(updatedFormFields);
   };
 
   const handleRemoveFields = (index: any) => {
@@ -61,6 +66,13 @@ const CreateForm = () => {
     console.log("index removed", index);
     values.splice(index, 1);
     setFormFields(values);
+  };
+
+  const isCreateFormDisabled = () => {
+    if (sectionDetails.formName.length > 0) {
+      return true;
+    }
+    return false;
   };
 
   const handleSubmit = (event: any) => {
@@ -91,60 +103,35 @@ const CreateForm = () => {
     }
   };
 
+  useEffect(() => {
+    console.log("formFields", formFields);
+  }, [formFields]);
+
   return (
-    <div className="p-3 bg-white h-screen">
-      <div className="flex items-center justify-between w-full"></div>
-      <p className="text-xl pb-5">Configure New Form Fields</p>
+    <div className="p-2 bg-white h-screen">
+      <div className="flex items-center justify-between w-full mb-1">
+        <p className="text-lg">Configure New Form Fields</p>
+        <div className="flex items-center justify-between gap-1">
+          <label className="flex min-w-max w-8 p-2">
+            <p>Form Name</p>
+            <span className="text-red">*</span>
+          </label>
+          <input
+            required
+            type="text"
+            name="formName"
+            value={sectionDetails.formName}
+            placeholder="Enter Section Name"
+            className="input input-bordered w-full max-w-xs"
+            onChange={handleSectionDetailsChange}
+          />
+        </div>
+      </div>
       <div className="border border-grey bg-white">
-        <div className="p-4">
-          <div className="flex flex-row justify-between form-control w-full">
-            <div>
-              <label className="label">
-                Form Name<span className="text-red">*</span>&nbsp;&nbsp;
-                &nbsp;&nbsp;
-              </label>
-              <input
-                required
-                type="text"
-                name="formName"
-                value={sectionDetails.formName}
-                placeholder="Enter Section Name"
-                className="input input-bordered w-full max-w-xs"
-                onChange={handleSectionDetailsChange}
-              />
-            </div>
-            {/* <div className=" flex form-control m-2  max-w-xs">
-              <label className="label block">
-                Section Status<span className="text-red">*</span>
-              </label>
-              <div className="flex">
-                <div className="m-4 flex mt-2">
-                  <input
-                    type="radio"
-                    name="status"
-                    value="Active"
-                    className="radio"
-                    onChange={(event: any) => handleSectionDetailsChange(event)}
-                  />
-                  <label>&nbsp;Active </label>
-                </div>
-                <div className="flex mt-2">
-                  <input
-                    type="radio"
-                    name="status"
-                    value="In-Active"
-                    className="radio"
-                    onChange={(event: any) => handleSectionDetailsChange(event)}
-                  />
-                  <label>&nbsp;In-Active</label>
-                </div>
-              </div>
-            </div> */}
-          </div>
-          <div className="py-6 mx-2">
-            <p className="text-md font-semibold">From Details</p>
-          </div>
-          <div className="border border-grey p-4">
+        <div className="px-4 py-2">
+          <div className="flex flex-row justify-between form-control w-full"></div>
+          <p className="text-md font-semibold my-2">From Details</p>
+          <div className="border border-grey px-4 py-2">
             <form>
               {formFields.map((field: any, index: any) => (
                 <div key={index}>
@@ -174,11 +161,10 @@ const CreateForm = () => {
                         required
                         className="select select-bordered w-full max-w-xs"
                         name="type"
+                        defaultValue="text"
                         onChange={(event: any) => handleChange(index, event)}
                       >
-                        <option selected value="text">
-                          Text
-                        </option>
+                        <option value="text">Text</option>
                         <option value="password">Password</option>
                         <option value="number">Number</option>
                         <option value="textarea">Textarea</option>
@@ -205,20 +191,28 @@ const CreateForm = () => {
                           />
                           <label>&nbsp;Yes </label>
                         </div>
-                        {/* <div className="flex mt-2">
-                        <input
-                          required
-                          type="radio"
-                          name="required"
-                          value={formFields[index].required}
-                          className="radio"
-                          checked={formFields[index].required ? true : false}
-                          onChange={(event: any) => handleChange(index, event)}
-                        />
-                        <label>&nbsp;No</label>
-                      </div> */}
                       </div>
                     </div>
+                    {formFields[index].type !== "text" && (
+                      <div className="form-control m-2  max-w-xs">
+                        <label className="label block">
+                          Validation<span className="text-red">*</span>
+                        </label>
+                        <div className="flex">
+                          <div className="m-4 flex mt-2">
+                            <input
+                              required
+                              type="checkbox"
+                              name="isValidationTrue"
+                              className="checkbox"
+                              checked={formFields[index].isValidationTrue}
+                              onChange={(event) => handleChange(index, event)}
+                            />
+                            <label>&nbsp;Yes </label>
+                          </div>
+                        </div>
+                      </div>
+                    )}
                     <div className="flex items-center">
                       {index != 0 && (
                         <svg
@@ -226,10 +220,10 @@ const CreateForm = () => {
                           width="24"
                           height="24"
                           stroke="red"
-                          stroke-width="2"
+                          strokeWidth="2"
                           fill="none"
                           stroke-linecap="round"
-                          stroke-linejoin="round"
+                          strokeLinejoin="round"
                           className="css-i6dzq1"
                           type="button"
                           onClick={() => handleRemoveFields(index)}
@@ -252,6 +246,21 @@ const CreateForm = () => {
                       />
                     </div>
                   )}
+                  {formFields[index].type !== "text" &&
+                    formFields[index].isValidationTrue && (
+                      <>
+                        <div className="divider"></div>
+                        <div>
+                          <InputValidation
+                            index={index}
+                            inputType={formFields[index].type}
+                            formFields={formFields}
+                            field={field}
+                            handleValidationChange={handleValidationChange}
+                          />
+                        </div>
+                      </>
+                    )}
                   <div className="divider"></div>
                 </div>
               ))}
@@ -271,6 +280,7 @@ const CreateForm = () => {
               type="button"
               className="bg-blue py-2 px-4 rounded text-white"
               onClick={handleSubmit}
+              // disabled={isCreateFormDisabled()}
             >
               Create Form
             </button>
