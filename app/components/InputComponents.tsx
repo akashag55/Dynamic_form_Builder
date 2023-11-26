@@ -45,19 +45,10 @@ export const Textinput = (props: any) => {
 export const NumberInput = (props: any) => {
   const [isInvalid, setIsInvalid] = useState(false);
   const [errorText, setErrorText] = useState("");
-  const { fields, onChangehandler } = props;
-  const {
-    name,
-    type,
-    required,
-    isValidationTrue,
-    validation,
-    values,
-  } = fields;
+  const { fields, onChangehandler, formData } = props;
+  const { name, type, required, isValidationTrue, validation, values } = fields;
   const { minValue, maxValue } = validation;
-  console.log("----0", props)
   const handleChange = (e: any) => {
-    // validate(schemaName, value)
     if (isValidationTrue) {
       const valid: any = validateNumber(
         "number",
@@ -85,7 +76,7 @@ export const NumberInput = (props: any) => {
       <input
         type="number"
         name={name.toLowerCase()}
-        value={props.formData.name}
+        value={formData.name}
         placeholder={`Enter ${name}`}
         required={required}
         className="input input-bordered w-full max-w-xs"
@@ -93,8 +84,7 @@ export const NumberInput = (props: any) => {
       />
       {isInvalid && (
         <label className="text-xs text-red p-1">
-          {(props.fields.validation?.errorText?.length > 0 &&
-            props.fields.validation?.errorText) ||
+          {(validation?.errorText?.length > 0 && validation?.errorText) ||
             errorText}
         </label>
       )}
@@ -105,17 +95,20 @@ export const NumberInput = (props: any) => {
 export const Emailinput = (props: any) => {
   const [isInvalid, setIsInvalid] = useState(false);
   const [errorText, setErrorText] = useState("");
-  const name = props.fields.name.toLowerCase();
+  const { fields, onChangehandler } = props;
+  const { name, type, required, isValidationTrue, validation, values } = fields;
+  // const name = props.fields.name.toLowerCase();
   const handleChange = (e: any) => {
-    // validate(schemaName, value)
-    const valid: any = validateString("email", e.target.value);
-    console.log("valid - ", valid);
-    if (valid["error"]) {
-      setErrorText(valid.error.message);
-      setIsInvalid(true);
-    } else {
-      setErrorText("");
-      setIsInvalid(false);
+    if (isValidationTrue) {
+      const valid: any = validateString("email", e.target.value);
+      console.log("valid - ", valid);
+      if (valid["error"]) {
+        setErrorText(valid.error.message);
+        setIsInvalid(true);
+      } else {
+        setErrorText("");
+        setIsInvalid(false);
+      }
     }
     props.onChangehandler(e);
   };

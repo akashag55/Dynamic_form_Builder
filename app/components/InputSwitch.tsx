@@ -1,8 +1,8 @@
 "use client";
 import React, { useState } from "react";
+import { IoCloseOutline } from "react-icons/io5";
 
 const InputSwitch = (props: any) => {
-
   const addValue = (index: number) => {
     const updatedFields = [...props.formFields];
     updatedFields[index].values.push("");
@@ -55,23 +55,10 @@ const InputSwitch = (props: any) => {
               />
               <div className="flex items-center ml-2">
                 {valueIndex >= 2 && (
-                  <svg
-                    viewBox="0 0 24 24"
-                    width="24"
-                    height="24"
-                    stroke="red"
-                    strokeWidth="2"
-                    fill="none"
-                    stroke-linecap="round"
-                    strokeLinejoin="round"
-                    className="css-i6dzq1"
-                    type="button"
+                  <IoCloseOutline
+                    className="btn btn-circle btn-xs"
                     onClick={() => removeValue(props.index, valueIndex)}
-                  >
-                    <circle cx="12" cy="12" r="10"></circle>
-                    <line x1="15" y1="9" x2="9" y2="15"></line>
-                    <line x1="9" y1="9" x2="15" y2="15"></line>
-                  </svg>
+                  />
                 )}
               </div>
             </div>
@@ -80,7 +67,7 @@ const InputSwitch = (props: any) => {
         <div className="flex justify-end items-center">
           <button
             type="button"
-            className="bg-blue py-1 px-2 rounded text-white"
+            className="btn"
             onClick={() => addValue(props.index)}
           >
             Add value
@@ -107,23 +94,10 @@ const InputSwitch = (props: any) => {
               />
               <div className="flex items-center ml-2">
                 {valueIndex >= 2 && (
-                  <svg
-                    viewBox="0 0 24 24"
-                    width="24"
-                    height="24"
-                    stroke="red"
-                    strokeWidth="2"
-                    fill="none"
-                    stroke-linecap="round"
-                    strokeLinejoin="round"
-                    className="css-i6dzq1"
-                    type="button"
+                  <IoCloseOutline
+                    className="btn btn-circle btn-xs"
                     onClick={() => removeValue(props.index, valueIndex)}
-                  >
-                    <circle cx="12" cy="12" r="10"></circle>
-                    <line x1="15" y1="9" x2="9" y2="15"></line>
-                    <line x1="9" y1="9" x2="15" y2="15"></line>
-                  </svg>
+                  />
                 )}
               </div>
               {/* <button onClick={() => removeField(index)}>Remove</button> */}
@@ -133,7 +107,7 @@ const InputSwitch = (props: any) => {
         <div className="flex justify-end items-center">
           <button
             type="button"
-            className="bg-blue py-1 px-2 rounded text-white"
+            className="btn"
             onClick={() => addValue(props.index)}
           >
             Add value
@@ -160,23 +134,10 @@ const InputSwitch = (props: any) => {
               />
               <div className="flex items-center ml-2">
                 {valueIndex >= 2 && (
-                  <svg
-                    viewBox="0 0 24 24"
-                    width="24"
-                    height="24"
-                    stroke="red"
-                    strokeWidth="2"
-                    fill="none"
-                    stroke-linecap="round"
-                    strokeLinejoin="round"
-                    className="css-i6dzq1"
-                    type="button"
+                  <IoCloseOutline
+                    className="btn btn-circle btn-xs"
                     onClick={() => removeValue(props.index, valueIndex)}
-                  >
-                    <circle cx="12" cy="12" r="10"></circle>
-                    <line x1="15" y1="9" x2="9" y2="15"></line>
-                    <line x1="9" y1="9" x2="15" y2="15"></line>
-                  </svg>
+                  />
                 )}
               </div>
               {/* <button onClick={() => removeField(index)}>Remove</button> */}
@@ -186,7 +147,7 @@ const InputSwitch = (props: any) => {
         <div className="flex justify-end items-center">
           <button
             type="button"
-            className="bg-blue py-1 px-2 rounded text-white"
+            className="btn"
             onClick={() => addValue(props.index)}
           >
             Add value

@@ -1,16 +1,22 @@
 import React, { useState, useEffect, useContext } from "react";
 import { InputSwitch, InputValidation } from "../components";
+import { IoCloseOutline } from "react-icons/io5";
 import { FormContext } from "../context";
+import { v4 as uuidv4 } from "uuid";
+import clsx from "clsx";
 
 const CreateForm = () => {
   const initialState = [
     {
+      id: uuidv4(),
       name: "",
       type: "text",
       values: ["", ""],
       required: true,
       isValidationTrue: true,
       validation: {},
+      isDependant: false,
+      dependants: {},
     },
   ];
   const { addForm } = useContext(FormContext);
@@ -44,6 +50,7 @@ const CreateForm = () => {
     setFormFields([
       ...formFields,
       {
+        id: uuidv4(),
         name: "",
         type: "text",
         values: ["", ""],
@@ -77,22 +84,8 @@ const CreateForm = () => {
 
   const handleSubmit = (event: any) => {
     event.preventDefault();
-    // setFormFields({ ...formFields, formName: sectionDetails.formName });
-    let response;
-    try {
-      const addData = async () => {
-        // response = await addSectionDetails(sectionDetails);
-        console.log("section details in function", sectionDetails);
-        // setResponse(response);
-      };
-      addData();
 
-      const addfieldData = async () => {
-        // response = await addSectionFormDetails(formFields);
-        console.log("section form details in function", formFields);
-        // setResponse(response);
-      };
-      addfieldData();
+    try {
       addForm({
         name: sectionDetails.formName,
         formData: formFields,
@@ -101,6 +94,23 @@ const CreateForm = () => {
     } catch (error) {
       console.log(error);
     }
+  };
+
+  const isSubmitDiabled = () => {
+    let arrayOfChecks = [];
+    if (sectionDetails.formName.length === 0) {
+      arrayOfChecks.push(false);
+    }
+    formFields.map((field: any) => {
+      if (field.name.length === 0) {
+        arrayOfChecks.push(false);
+      }
+      if (field.isValidationTrue) {
+      }
+    });
+    if (arrayOfChecks.includes(false)) {
+      return true;
+    } else return false;
   };
 
   useEffect(() => {
@@ -161,7 +171,7 @@ const CreateForm = () => {
                         required
                         className="select select-bordered w-full max-w-xs"
                         name="type"
-                        defaultValue="text"
+                        value={field.type}
                         onChange={(event: any) => handleChange(index, event)}
                       >
                         <option value="text">Text</option>
@@ -215,23 +225,10 @@ const CreateForm = () => {
                     )}
                     <div className="flex items-center">
                       {index != 0 && (
-                        <svg
-                          viewBox="0 0 24 24"
-                          width="24"
-                          height="24"
-                          stroke="red"
-                          strokeWidth="2"
-                          fill="none"
-                          stroke-linecap="round"
-                          strokeLinejoin="round"
-                          className="css-i6dzq1"
-                          type="button"
+                        <IoCloseOutline
+                          className="btn btn-circle btn-xs"
                           onClick={() => handleRemoveFields(index)}
-                        >
-                          <circle cx="12" cy="12" r="10"></circle>
-                          <line x1="15" y1="9" x2="9" y2="15"></line>
-                          <line x1="9" y1="9" x2="15" y2="15"></line>
-                        </svg>
+                        />
                       )}
                     </div>
                   </div>
@@ -246,6 +243,7 @@ const CreateForm = () => {
                       />
                     </div>
                   )}
+                  {/* Input Validation is rendering Validation parameters for different input types when we add fields */}
                   {formFields[index].type !== "text" &&
                     formFields[index].isValidationTrue && (
                       <>
@@ -257,6 +255,7 @@ const CreateForm = () => {
                             formFields={formFields}
                             field={field}
                             handleValidationChange={handleValidationChange}
+                            setFormFields={setFormFields}
                           />
                         </div>
                       </>
@@ -265,12 +264,9 @@ const CreateForm = () => {
                 </div>
               ))}
             </form>
+            {/* Button to add add new field */}
             <div className="flex justify-end items-center">
-              <button
-                type="button"
-                className="bg-blue py-2 px-4 rounded text-white"
-                onClick={handleAddFields}
-              >
+              <button type="button" className="btn" onClick={handleAddFields}>
                 Add Field
               </button>
             </div>
@@ -278,9 +274,9 @@ const CreateForm = () => {
           <div className="flex justify-center p-2 m-2">
             <button
               type="button"
-              className="bg-blue py-2 px-4 rounded text-white"
+              className={clsx("btn", isSubmitDiabled() && "btn-disabled")}
               onClick={handleSubmit}
-              // disabled={isCreateFormDisabled()}
+              aria-disabled={isSubmitDiabled()}
             >
               Create Form
             </button>

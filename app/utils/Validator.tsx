@@ -12,12 +12,7 @@ const schemaMap: any = {
 export const validateString = (schema: any, Input: any) =>
   schemaMap[schema].validate(Input);
 
-export const validateNumber = (
-  schema: any,
-  Input: any,
-  min: any,
-  max: any
-) => {
+export const validateNumber = (schema: any, Input: any, min: any, max: any) => {
   // console.log(schemaMap[schema], Input, min, max);
   return schemaMap[schema](parseInt(min), parseInt(max)).validate(Input);
 };

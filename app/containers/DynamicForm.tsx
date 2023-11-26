@@ -59,7 +59,7 @@ const DynamicForm = (props: any) => {
       <div className="border border-grey bg-white">
         <div className="border border-grey p-4 m-3 rounded-md">
           <form>
-            <div className="flex flex-wrap justify-between">
+            <div className="flex flex-2 justify-around">
               {props.selectedForm.formData.map((item: any, index: number) => {
                 console.log(item);
                 return (
@@ -167,10 +167,6 @@ const DynamicForm = (props: any) => {
         </div>
       )}
     </div>
-    // {/* --------------------Add user Modal End----------------------*/}
-
-    // </div>
-    // </div>
   );
 };
 
