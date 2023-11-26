@@ -6,8 +6,15 @@ const FormContext = createContext<any>([]);
 
 // Create a context provider
 const FormContextProvider = ({ children }: any) => {
-  const localForm: any = localStorage.getItem("forms");
-  const localSubmissions: any = localStorage.getItem("submissions");
+  let localForm: any;
+
+  if (typeof window !== "undefined") {
+    localForm = localStorage.getItem("forms");
+  } else {
+    localForm = null;
+  }
+
+  // const localSubmissions: any = localStorage?.getItem("submissions");
 
   if (localForm) {
     console.log("localForm  - - ", localForm);
