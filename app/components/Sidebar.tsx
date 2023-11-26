@@ -1,5 +1,7 @@
 import React from "react";
 import FormOptions from "./FormOptions";
+import { IoIosAdd } from "react-icons/io";
+import ImportForm from "./ImportForm";
 
 const Sidebar = ({
   forms,
@@ -12,7 +14,12 @@ const Sidebar = ({
     <aside className="bg-white w-1/5 h-screen border-r-2 border-grey">
       <div className="p-4">
         <h2 className="text-lg">Forms</h2>
-        <ul className="p-1 flex flex-col items-center justify-le">
+        <ul className="p-1 flex flex-col items-center justify-le gap-2">
+          {forms.length === 0 && (
+            <li className="border w-full flex justify-center items-center p-4">
+              <span>No Forms</span>
+            </li>
+          )}
           {forms?.map((form: any, i: any) => {
             return (
               <FormOptions
@@ -28,25 +35,13 @@ const Sidebar = ({
           <li className="">
             <button
               onClick={() => handleMenuClick("addsection")}
-              className="flex w-max bg-blue p-2 m-2 rounded text-white"
+              className="btn flex"
             >
-              <svg
-                viewBox="0 0 24 24"
-                width="24"
-                height="24"
-                stroke="currentColor"
-                strokeWidth="2"
-                fill="none"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                className="css-i6dzq1"
-              >
-                <line x1="12" y1="5" x2="12" y2="19"></line>
-                <line x1="5" y1="12" x2="19" y2="12"></line>
-              </svg>{" "}
-              Create Form
+              <IoIosAdd className="w-6 h-6" />
+              <span>Create Form</span>
             </button>
           </li>
+          <ImportForm />
         </ul>
       </div>
       {/* <div className="p-4">
